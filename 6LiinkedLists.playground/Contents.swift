@@ -153,3 +153,199 @@ extension SinglyLinkedList3: CustomStringConvertible {
         return String(describing: head)
     }
 }
+
+// REMOVING NEW VALUES FROM A LINKED LIST
+
+// removeLast - removes values from the end of the list
+// remove(at:) - removes values from anywhere in a list
+
+// removeLast
+
+public class SinglyLinkedList4<listType> {
+    public var head: Node<listType>?
+    public var tail: Node<listType>?
+    
+    // checks whether the LinkedList is empty or not
+    public var isEmpty: Bool {
+        return head == nil
+    }
+    
+    public func append(value: listType) {
+        let newNode = Node(value: value)
+        if var h = head {
+            while h.next != nil {
+                h = h.next!
+            }
+            h.next = newNode
+        } else {
+            head = newNode
+        }
+    }
+    
+    func insert(value : listType, index : Int) {
+        let newNode = Node(value: value)
+        
+        if (index == 0) {
+            newNode.next = head
+            head = newNode
+        } else {
+            var prev = head
+            var cur = head
+            // what's going on with the syntax in the next four lines?
+            for _ in 0..<index {
+                prev = cur
+                cur = cur?.next
+            }
+            newNode.next = prev?.next
+            prev?.next = newNode
+        }
+        
+        func removeLast() -> listType? {
+            // check if the head is nil
+            if let h = head {
+                
+                // check if the list consists of one node
+                // remove the one node inside defer
+                if h.next == nil {
+                    defer {
+                        head = nil
+                        tail = nil
+                    }
+                    return h.value
+                }
+                
+                // search for the next node until curr.next is nil
+                var prev = h
+                var curr = h
+                while let next = curr.next {
+                    prev = curr
+                    curr = next
+                }
+                prev.next = nil
+                tail = prev
+                return curr.value
+                
+            } else {
+                return nil
+            }
+        }
+    }
+}
+extension SinglyLinkedList4: CustomStringConvertible {
+    public var description: String{
+        
+        // guard means only execute if that condition is true
+        guard let head = head else {
+            return "Empty list"
+        }
+        return String(describing: head)
+    }
+}
+
+// remove(at:)
+
+public class SinglyLinkedList5<listType> {
+    public var head: Node<listType>?
+    public var tail: Node<listType>?
+    
+    // checks whether the LinkedList is empty or not
+    public var isEmpty: Bool {
+        return head == nil
+    }
+    
+    public func append(value: listType) {
+        let newNode = Node(value: value)
+        if var h = head {
+            while h.next != nil {
+                h = h.next!
+            }
+            h.next = newNode
+        } else {
+            head = newNode
+        }
+    }
+    
+    func insert(value : listType, index : Int) {
+        let newNode = Node(value: value)
+        
+        if (index == 0) {
+            newNode.next = head
+            head = newNode
+        } else {
+            var prev = head
+            var cur = head
+            // what's going on with the syntax in the next four lines?
+            for _ in 0..<index {
+                prev = cur
+                cur = cur?.next
+            }
+            newNode.next = prev?.next
+            prev?.next = newNode
+        }
+        
+        func removeLast() -> listType? {
+            // check if the head is nil
+            if let h = head {
+                
+                // check if the list consists of one node
+                // remove the one node inside defer
+                if h.next == nil {
+                    defer {
+                        head = nil
+                        tail = nil
+                    }
+                    return h.value
+                }
+                
+                // search for the next node until curr.next is nil
+                var prev = h
+                var curr = h
+                while let next = curr.next {
+                    prev = curr
+                    curr = next
+                }
+                prev.next = nil
+                tail = prev
+                return curr.value
+                
+            } else {
+                return nil
+            }
+        }
+        func remove(at position: Int) {
+            
+            // 1. check if the head is nil; then there is nothing to remove
+            if head == nil {
+                return
+            }
+            
+            // create an instance of the head
+            var h = head
+            
+            // if the position is 0, remove the head and set the next value to the head
+            if (position == 0) {
+                head = h?.next
+                return
+            }
+            // loop from 0 to position by assigning head
+            for _ in 0..<position-1 where h != nil {
+                h = h?.next
+            }
+            if h == nil || h?.next == nil {
+                return
+            }
+            let nextToNextNode = h?.next?.next
+            h?.next = nextToNextNode
+        }
+    }
+}
+extension SinglyLinkedList5: CustomStringConvertible {
+    public var description: String{
+        
+        // guard means only execute if that condition is true
+        guard let head = head else {
+            return "Empty list"
+        }
+        return String(describing: head)
+    }
+}
