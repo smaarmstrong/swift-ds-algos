@@ -349,3 +349,26 @@ extension SinglyLinkedList5: CustomStringConvertible {
         return String(describing: head)
     }
 }
+
+// DOUBLY LINKED LIST
+
+// First, let's make the double nodes.
+
+public class DoubleNode<nodeType> {
+    var value: nodeType
+    var next: DoubleNode<nodeType>?
+    weak var previous: DoubleNode<nodeType>?
+    
+    init(value: nodeType) {
+        self.value = value
+    }
+}
+
+extension DoubleNode: CustomStringConvertible {
+    public var description: String {
+        guard let next = next else {
+            return "\(value)"
+        }
+    return "\(value) -> " + String(describing: next) + " " }
+}
+
