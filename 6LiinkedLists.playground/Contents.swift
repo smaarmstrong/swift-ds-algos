@@ -372,3 +372,25 @@ extension DoubleNode: CustomStringConvertible {
     return "\(value) -> " + String(describing: next) + " " }
 }
 
+// Now here's a basic DoublyLinkedList class.
+
+public class DoublyLinkedList<listType> {
+    var head: DoubleNode<listType>?
+    private var tail: DoubleNode<listType>?
+    
+    public var isEmpty: Bool {
+        return head == nil
+    }
+    public func nodeAt(index: Int) -> DoubleNode<listType>? {
+        if index >= 0 {
+            var node = head
+            var i = index
+            while node != nil {
+                if i == 0 { return node }
+                i -= 1
+                node = node!.next
+            }
+        }
+        return nil
+    }
+}
