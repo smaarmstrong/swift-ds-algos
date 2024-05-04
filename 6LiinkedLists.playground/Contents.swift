@@ -393,4 +393,74 @@ public class DoublyLinkedList<listType> {
         }
         return nil
     }
+    
+    // APPEND
+    func insert(node: DoubleNode<listType>, at index: Int) {
+        if index == 0,
+           tail == nil {
+            head = node
+            tail = node
+        } else {
+            guard let nodeAtIndex = nodeAt(index: index) else {
+                print("Index out of bounds.")
+                return
+            }
+            if nodeAtIndex.previous == nil {
+                head = node
+            }
+            node.previous = nodeAtIndex.previous
+            nodeAtIndex.previous?.next = node
+            
+            node.next = nodeAtIndex
+            nodeAtIndex.previous = node
+        }
+    }
+    
+    // REMOVE NODE METHOD
+    public func remove(node: DoubleNode<listType>) -> listType {
+        let previousNode = node.previous
+        let nextNode = node.next
+        
+        if let prev = previousNode {
+            prev.next = nextNode
+        } else {
+            head = nextNode
+        }
+        nextNode?.previous = previousNode
+        
+        if nextNode == nil {
+            tail = previousNode
+        }
+        
+        node.previous = nil
+        node.next = nil
+        
+        return node.value
+    }
+    
+    // REMOVE(at:)
+    func remove(at index: Int) {
+        var toDeleteNode = nodeAt(index: index)
+        guard toDeleteNode != nil else {
+            print("Index out of bounds.")
+            return
+        }
+        
+        let previousNode = toDeleteNode?.previous
+        let nextNode = toDeleteNode?.next
+        
+        if previousNode == nil {
+            head = nextNode
+        }
+        
+        if toDeleteNode?.next == nil {
+            tail = previousNode
+        }
+        
+        previousNode?.next = nextNode
+        nextNode?.previous = previousNode
+        
+        toDeleteNode = nil
+    }
+
 }
